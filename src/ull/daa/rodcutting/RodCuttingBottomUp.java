@@ -1,7 +1,6 @@
 package ull.daa.rodcutting;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Implementación BottomUp para el corte de vástagos.
@@ -10,14 +9,22 @@ import java.util.Scanner;
  */
 public class RodCuttingBottomUp {
 	
+	private static Integer costes;
+	private static Rod rod;
 	private static ArrayList<Integer> r = new ArrayList<Integer>();
 	private static ArrayList<Integer> s = new ArrayList<Integer>();
 
 	public static void main(String args[]){
 		
-
-		start(new Integer(args[0]), new Integer(args[1]));
-		
+		Clock c = new Clock();
+		for(int i = 5000; i < 100000; i+=5000) {
+			start(100000, 100);
+			c.start();
+			extendedBottomUpCutRod(getRod(), i);
+			System.out.println("Tiempo transcurrido para n=" + i + ": " + c.stop() + "ms\n");
+		}
+		extendedBottomUpCutRod(getRod(), new Integer(args[0]));
+		System.out.println("Fin");
 		
 	}
 	
@@ -35,13 +42,7 @@ public class RodCuttingBottomUp {
 			getR().add(0);
 		}
 		
-		Rod rod = new Rod(new Integer(rodSize), new Integer(price));
-		System.out.print("Tamaño = ");
-		Scanner scanner = new Scanner(System.in);
-		Integer cortes = scanner.nextInt();
-		scanner.close();
-		extendedBottomUpCutRod(rod, cortes);
-		printSolution(rod, cortes);
+		setRod(new Rod(new Integer(rodSize), new Integer(price)));
 
 	}
 
@@ -93,6 +94,22 @@ public class RodCuttingBottomUp {
 
 	public static void setS(ArrayList<Integer> sCopy) {
 		s = sCopy;
+	}
+
+	public static Integer getCostes() {
+		return costes;
+	}
+
+	public static void setCostes(Integer costes) {
+		RodCuttingBottomUp.costes = costes;
+	}
+
+	public static Rod getRod() {
+		return rod;
+	}
+
+	public static void setRod(Rod rod) {
+		RodCuttingBottomUp.rod = rod;
 	}
 	
 	
